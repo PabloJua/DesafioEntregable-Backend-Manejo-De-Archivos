@@ -106,28 +106,6 @@ class ProductManager {
     //         console.log("Producto eliminado correctamente")
     //     })
     // }
-
-
-    // Otra forma de Eliminar Producto, utilizando el metodo filter
-
-    // async deleteProduct (deleteById){
-    //     const data = await fs.promises.readFile(this.path, 'utf-8');
-    //     const products = JSON.parse(data);
-
-    //     const deleteItemFilter = products.filter(product => product.id !== deleteById);
-
-    //     if (deleteItemFilter.length === products.length) {
-    //         console.log('Error: No se encontró producto con ID ${deleteById}');
-    //         return;
-    //     }
-
-    //     fs.writeFile(this.path, JSON.stringify(deleteItemFilter), err => {
-    //         if (err) throw err;
-    //         console.log('Producto borrado con éxito desde deleteProduct');
-    //     });
-        
-    // }
-
 }
 
 //C A S O S    D E    U S O 
