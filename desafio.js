@@ -118,4 +118,4 @@ console.log(manager.getProducts());
 // manager.getProductId(3);
 // console.log(manager.getProductId(2).description);
 // manager.updateProduct(2,'description', 'Tablet Samsung');
-manager.deleteProduct(2);
+// manager.deleteProduct(2);
