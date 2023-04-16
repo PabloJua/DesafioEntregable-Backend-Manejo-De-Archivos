@@ -4,7 +4,7 @@ class ProductManager {
     constructor() {
         this.products = [];
         this.id = 0;
-        this.path = './listadoDeProductos.JSON'
+        this.path = './listadoDeProductos.JSON';
     }
 
     addProduct(title, description, price, thumbnail, code, stock) {
@@ -34,7 +34,7 @@ class ProductManager {
         this.products.push(producto_nuevo);
         console.log("Producto agregado correctamente");
         // Guardar el array de productos en el archivo
-        fs.watchFile(this.path, JSON.stringify(this.products), (err) => {
+        fs.writeFile(this.path, JSON.stringify(this.products), (err) => {
             if (err) throw err;
             console.log("Productos almacenados con exito en el archivo");
         });
@@ -55,57 +55,58 @@ class ProductManager {
     }
 
 
-    async getProductId(productId) {
-        // Leer el archivo, buscar el producto con el id especificado y devolverlo en formato objeto
-        const data = await fs.promises.readFile(this.path, 'utf-8'); // Leer el archivo
-        const productsById = JSON.parse(data);
-        const product = productsById.find(product => product.id === productId) // find() devuelve el valor del primer elemento del array que cumple la función de prueba proporcionada.
-        if (product) { // Devolverlo en formato objeto
-            console.log(product);
-            return product;
-        } else {
-            console.log("Producto no existe")
-        }
-    }
+    // async getProductId(productId) {
+    //     // Leer el archivo, buscar el producto con el id especificado y devolverlo en formato objeto
+    //     const data = await fs.promises.readFile(this.path, 'utf-8'); // Leer el archivo
+    //     const productsById = JSON.parse(data);
+    //     const product = productsById.find(product => product.id === productId) // find() devuelve el valor del primer elemento del array que cumple la función de prueba proporcionada.
+    //     if (product) { // Devolverlo en formato objeto
+    //         console.log(product);
+    //         return product;
+    //     } else {
+    //         console.log("Producto no existe")
+    //     }
+    // }
 
 
-    // async updateProduct(productId) {
+    // async updateProduct(productId, field, updateData) {
     //     const data = await fs.promises.readFile(this.path, 'utf-8');
     //     const products = JSON.parse(data)
-    //     const indiceObj = products.findIndex (product => product.id === productId); // findIndex() devuelve el índice del primer elemento de un array que cumpla la condicion. En caso contrario devuelve -1.
-    //     if (indiceObj === -1  ){
+    //     const index = products.findIndex (product => product.id === productId); // findIndex() devuelve el índice del primer elemento de un array que cumpla la condicion. En caso contrario devuelve -1.
+    //     if (index === -1 ){
     //         console.log("Producto no encontrado");
     //         return;
     //     } 
-    //     products[indiceObj][field] = updateData; // Actualizar el valor del campo en el objeto con el índice en el arreglo products al nuevo valor asignado".
+    //     products[index][field] = updateData; 
+    //      // Actualizar el valor del campo en el objeto con el índice en el arreglo products al nuevo valor asignado".
     //     // products es el nombre del arreglo que contiene los objetos.
     //     // index es el índice del objeto en el arreglo que quieres actualizar.
     //     // field es el nombre del campo específico en el objeto que quieres actualizar.
     //     // updateData es el nuevo valor que deseas asignar al campo.
-        
-    //     fs.writeFile(this.products, JSON.stringify(products), err => {
+
+    //     fs.writeFile(this.path, JSON.stringify(products), err => {
     //         if(err) throw err;
     //         console.log("Producto actualizado correctamente")
     //     });
     // }
 
 
-    // async deleteProduct(productIdToDelete) {
-    //     const data = await fs.promises.readFile(this.path, 'utf-8');
-    //     const products = JSON.parse(data);
+    async deleteProduct(productIdToDelete) {
+        const data = await fs.promises.readFile(this.path, 'utf-8');
+        const products = JSON.parse(data);
 
-    //     const productoEliminado = products.findIndex( product => product.id === productIdToDelete)
-    //     if(productoEliminado === -1) {
-    //         console.log(`No se encontró producto con ID ${productIdToDelete}`);
-    //         return;
-    //     }
+        const productoEliminado = products.findIndex(product => product.id === productIdToDelete)
+        if(productoEliminado === -1) {
+            console.log(`No se encontró producto con ID ${productIdToDelete}`);
+            return;
+        }
 
-    //     products.splice(productIdToDelete, 1);
-    //     fs.writeFile(this.path, JSON.stringify(products), err => {
-    //         if(err) throw err;
-    //         console.log("Producto eliminado correctamente")
-    //     })
-    // }
+        products.splice(productIdToDelete, 1);
+        fs.writeFile(this.path, JSON.stringify(products), err => {
+            if(err) throw err;
+            console.log("Producto eliminado correctamente")
+        })
+    }
 }
 
 //C A S O S    D E    U S O 
@@ -114,8 +115,7 @@ manager.addProduct("Computadora", "Computadora Dell", 1500, "imagen1.jpg", "COMP
 manager.addProduct("Celular", "Celular Samsung", 12000, "imagen2.jpg", "CEL01", 1);
 manager.addProduct("Tablet", "Tablet Lenovo", 75000, "imagen3.jpg", "TAB01", 1);
 console.log(manager.getProducts());
-manager.getProductById(4);
-//console.log(manager.getProductById(2).description);
-//console.log(manager.getProducts);
-//manager.updateProduct(2,'description', 'Tablet Samsung');
-//manager.deleteProduct(2);
+// manager.getProductId(3);
+// console.log(manager.getProductId(2).description);
+// manager.updateProduct(2,'description', 'Tablet Samsung');
+manager.deleteProduct(2);
